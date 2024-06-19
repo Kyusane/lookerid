@@ -1,6 +1,5 @@
 require('dotenv').config();
 const cors = require('cors')
-const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
 
@@ -29,17 +28,11 @@ app.use('*', (req, res) => {
   res.status(404).json({ code: 404, mssg: "Request Invalid" })
 })
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    if (establishMQTTConnection) {
-      app.listen(process.env.PORT, () => {
-        console.log(`Server is running in http://localhost:${process.env.PORT}`)
-      })
-    }
+if (establishMQTTConnection) {
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is running in http://localhost:${process.env.PORT}`)
   })
-  .catch((error) => {
-    console.log(error)
-  })
+}
 
 
 
