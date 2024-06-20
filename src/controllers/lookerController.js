@@ -23,8 +23,8 @@ const accessLooker = async (req, res) => {
                if (lookerData.current_userID !== 'None' || lookerData.status !== "available") {
                     return successResponse(res, 200, "Access failed", { lookerName: lookerData.lookerName, message: "Locker is currently in use" })
                }
-               // const responseResult = await sendCommandToLocker(id);
-               const responseResult = true;
+               const responseResult = await sendCommandToLocker(id);
+               // const responseResult = true;
                if (responseResult) {
                     await Looker.updateCurrentAccess(req.userID, id, 'occupied', ts)
                     return successResponse(res, 200, "Access success", {
@@ -38,8 +38,8 @@ const accessLooker = async (req, res) => {
                }
           }
 
-          // const responseResult2 = await sendCommandToLocker(id);
-          const responseResult2 = true;
+          const responseResult2 = await sendCommandToLocker(id);
+          // const responseResult2 = true;
           if (responseResult2) {
                await Invoice.create(req.userID, id, lookerData.start_time, ts)
                await Looker.updateCurrentAccess('None', id, 'available', 'None')
