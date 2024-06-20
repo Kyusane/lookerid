@@ -15,7 +15,7 @@ async function sendCommandToLocker(lookerID) {
                const timeout = setTimeout(() => {
                     client.unsubscribe(responseTopic);
                     reject('ACK not received in time');
-               }, 3000);
+               }, 5000);
 
                client.on('message', (topic, message) => {
                     if (topic === responseTopic) {
